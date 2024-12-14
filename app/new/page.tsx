@@ -9,10 +9,10 @@ export default function Page() {
 
     await prisma.pasien.create({
       data: {
-        nama: formData.get("name") as string,
-        umur: parseInt(formData.get("age") as string),
-        keluhan: formData.get("complaint") as string,
-        nomorAntrian: parseInt(formData.get("queueNumber") as string),
+        nama: formData.get("nama") as string,
+        umur: parseInt(formData.get("umur") as string),
+        keluhan: formData.get("keluhan") as string,
+        nomorAntrian: parseInt(formData.get("nomorAntrian") as string),
         status: formData.get("status") as string,
       },
     });
@@ -34,15 +34,15 @@ export default function Page() {
         {/* Nama */}
         <div className="mb-4">
           <label
-            htmlFor="name"
+            htmlFor="nama"
             className="block text-sm font-semibold text-gray-700 mb-2"
           >
             Nama
           </label>
           <input
             type="text"
-            id="name"
-            name="name"
+            id="nama"
+            name="nama"
             placeholder="Masukkan nama pasien"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             required
@@ -52,15 +52,15 @@ export default function Page() {
         {/* Usia */}
         <div className="mb-4">
           <label
-            htmlFor="age"
+            htmlFor="umur"
             className="block text-sm font-semibold text-gray-700 mb-2"
           >
             Usia
           </label>
           <input
             type="number"
-            id="age"
-            name="age"
+            id="umur"
+            name="umur"
             placeholder="Masukkan usia pasien"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             required
@@ -77,8 +77,8 @@ export default function Page() {
           </label>
           <input
             type="text"
-            id="complaint"
-            name="complaint"
+            id="keluhan"
+            name="keluhan"
             placeholder="Masukkan keluhan pasien"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             required
@@ -95,8 +95,8 @@ export default function Page() {
           </label>
           <input
             type="number"
-            id="queueNumber"
-            name="queueNumber"
+            id="nomorAntrian"
+            name="nomorAntrian"
             placeholder="Masukkan nomor antrian"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             required
