@@ -1,11 +1,8 @@
-import { db } from "@/lib/db";
 import Link from "next/link";
-import { Pasien } from "./type";
+import { prisma } from "@/lib/prisma";
 
-export default function Page() {
-  const listPasien = db
-    .prepare("SELECT * FROM Patients")
-    .all() as Array<Pasien>;
+export default async function Page() {
+  const daftarPasien = await prisma.pasien.findMany();
 
   return (
     <div className="container mx-auto p-6">
@@ -26,16 +23,16 @@ export default function Page() {
             </tr>
           </thead>
           <tbody>
-            {listPasien.map((pasien) => (
+            {daftarPasien.map((pasien) => (
               <tr key={pasien.id} className="border-b hover:bg-gray-100">
                 <td className="px-4 py-2">{pasien.id}</td>
-                <td className="px-4 py-2">{pasien.name}</td>
-                <td className="px-4 py-2">{pasien.age}</td>
-                <td className="px-4 py-2">{pasien.complaint}</td>
-                <td className="px-4 py-2">{pasien.queueNumber}</td>
+                <td className="px-4 py-2">{pasien.nama}</td>
+                <td className="px-4 py-2">{pasien.umur}</td>
+                <td className="px-4 py-2">{pasien.keluhan}</td>
+                <td className="px-4 py-2">{pasien.nomorAntrian}</td>
                 <td className="px-4 py-2">{pasien.status}</td>
                 <td className="px-4 py-2">
-                  {new Date(pasien.createdAt).toLocaleString()}
+                  {pasien.tanggalDibuat.toLocaleString()}
                 </td>
                 <td>
                   <Link href={"/edit/" + pasien.id}>

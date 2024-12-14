@@ -1,5 +1,4 @@
-import { Pasien } from "@/app/type";
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -11,37 +10,34 @@ export default async function Page({
 }) {
   const { id } = await params;
 
-  const pasien = db
-    .prepare("SELECT * FROM Patients WHERE id = ?")
-    .get(id) as Pasien;
+  const pasien = await prisma.pasien.findFirst({
+    where: {
+      id: parseInt(id),
+    },
+  });
 
   async function updatePasien(formData: FormData) {
     "use server";
 
-    const rawFormData = {
-      name: formData.get("name"),
-      age: formData.get("age"),
-      complaint: formData.get("complaint"),
-      queueNumber: formData.get("queueNumber"),
-      status: formData.get("status"),
-      id: id,
-    };
-
-    const updatePasien = db.prepare(`
-      UPDATE Patients
-      SET 
-        name = @name, 
-        age = @age, 
-        complaint = @complaint, 
-        queueNumber = @queueNumber, 
-        status = @status
-      WHERE id = @id
-    `);
-
-    updatePasien.run(rawFormData);
+    await prisma.pasien.update({
+      data: {
+        nama: formData.get("name") as string,
+        umur: parseInt(formData.get("age") as string),
+        keluhan: formData.get("complaint") as string,
+        nomorAntrian: parseInt(formData.get("queueNumber") as string),
+        status: formData.get("status") as string,
+      },
+      where: {
+        id: parseInt(id),
+      },
+    });
 
     revalidatePath("/");
     redirect("/");
+  }
+
+  if (!pasien) {
+    return null;
   }
 
   return (
@@ -66,7 +62,7 @@ export default async function Page({
             type="text"
             id="name"
             name="name"
-            defaultValue={pasien.name}
+            defaultValue={pasien.nama}
             placeholder="Masukkan nama pasien"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             required
@@ -85,7 +81,7 @@ export default async function Page({
             type="number"
             id="age"
             name="age"
-            defaultValue={pasien.age}
+            defaultValue={pasien.umur}
             placeholder="Masukkan usia pasien"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             required
@@ -104,7 +100,7 @@ export default async function Page({
             type="text"
             id="complaint"
             name="complaint"
-            defaultValue={pasien.complaint}
+            defaultValue={pasien.keluhan ?? ""}
             placeholder="Masukkan keluhan pasien"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             required
@@ -123,7 +119,7 @@ export default async function Page({
             type="number"
             id="queueNumber"
             name="queueNumber"
-            defaultValue={pasien.queueNumber}
+            defaultValue={pasien.nomorAntrian}
             placeholder="Masukkan nomor antrian"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             required

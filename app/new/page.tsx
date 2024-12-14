@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
 
@@ -6,21 +6,16 @@ export default function Page() {
   async function tambahPasien(formData: FormData) {
     "use server";
 
-    const rawFormData = {
-      name: formData.get("name"),
-      age: formData.get("age"),
-      complaint: formData.get("complaint"),
-      queueNumber: formData.get("queueNumber"),
-      status: formData.get("status"),
-      createdAt: new Date().toISOString(),
-    };
+    await prisma.pasien.create({
+      data: {
+        nama: formData.get("name") as string,
+        umur: parseInt(formData.get("age") as string),
+        keluhan: formData.get("complaint") as string,
+        nomorAntrian: parseInt(formData.get("queueNumber") as string),
+        status: formData.get("status") as string,
+      },
+    });
 
-    const insertPatient = db.prepare(`
-      INSERT INTO patients (name, age, complaint, queueNumber, status, createdAt) 
-      VALUES (@name, @age, @complaint, @queueNumber, @status, @createdAt);
-    `);
-
-    insertPatient.run(rawFormData);
     revalidatePath("/");
   }
 
