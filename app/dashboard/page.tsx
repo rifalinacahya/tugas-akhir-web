@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
+// ----------------------------
+// Halaman Daftar Pasien
+// ----------------------------
+
 export default async function Page() {
   const daftarPasien = await prisma.pasien.findMany();
 
