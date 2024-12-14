@@ -23,9 +23,9 @@ export default function RegisterPage() {
       },
       {
         onRequest: () => {},
-        onSuccess: (ctx) => {
-          console.log(ctx);
+        onSuccess: () => {
           router.push("/dashboard");
+          router.refresh();
         },
         onError: (ctx) => {
           alert(ctx.error.message);
@@ -35,69 +35,75 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow">
+    <div className="mt-24 flex items-center justify-center">
+      <div className="max-w-lg w-full p-8 bg-white shadow-md rounded-lg">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold text-center mb-6">
             Buat akun baru
           </h2>
         </div>
-        <form onSubmit={signUp} className="mt-8 space-y-6">
-          <div className="rounded-md shadow-sm space-y-4">
-            <div>
-              <label htmlFor="name" className="sr-only">
-                Nama Lengkap
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                placeholder="Nama Lengkap"
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                placeholder="Email"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Kata Sandi
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                placeholder="Kata Sandi"
-              />
-            </div>
-          </div>
-
+        <form onSubmit={signUp} className="space-y-4">
           <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            <label
+              htmlFor="name"
+              className="block text-sm font-semibold text-gray-700 mb-2"
             >
-              Daftar
-            </button>
+              Nama Lengkap
+            </label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Masukkan nama lengkap"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-semibold text-gray-700 mb-2"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Masukkan email"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-semibold text-gray-700 mb-2"
+            >
+              Kata Sandi
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Masukkan kata sandi"
+            />
           </div>
 
-          <div className="text-sm text-center">
+          <div className="pt-6" />
+          <button
+            type="submit"
+            className="w-full py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Daftar
+          </button>
+
+          <div className="text-sm text-center mt-4">
             <Link
               href="/auth/login"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
+              className="font-medium text-blue-500 hover:text-blue-600"
             >
               Sudah punya akun? Masuk
             </Link>

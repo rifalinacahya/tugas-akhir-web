@@ -10,6 +10,7 @@ export default function LogoutPage() {
   useEffect(() => {
     authClient.signOut();
     router.push("/");
+    router.refresh();
   }, [router]);
 
   return null;
