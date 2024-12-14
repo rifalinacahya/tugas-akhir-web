@@ -39,7 +39,7 @@ export default async function Page() {
                   {pasien.tanggalDibuat.toLocaleString()}
                 </td>
                 <td>
-                  <Link href={"/edit/" + pasien.id}>
+                  <Link href={"/dashboard/edit/" + pasien.id}>
                     <button>edit</button>
                   </Link>
                 </td>
@@ -49,7 +49,7 @@ export default async function Page() {
         </table>
       </div>
 
-      <Link href="/new">
+      <Link href="/dashboard/new">
         <button className="mt-5 py-2 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
           Tambah Pasien
         </button>

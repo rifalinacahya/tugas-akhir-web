@@ -32,8 +32,8 @@ export default async function Page({
       },
     });
 
-    revalidatePath("/");
-    redirect("/");
+    revalidatePath("/dashboard");
+    redirect("/dashboard");
   }
 
   if (!pasien) {

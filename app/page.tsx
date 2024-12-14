@@ -1,13 +1,8 @@
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { getUser } from "@/lib/auth";
 import Link from "next/link";
 
 export default async function Page() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  const sudahLogin = session ? true : false;
+  const user = await getUser();
 
   const loginSection = (
     <div className="space-y-4">
@@ -29,6 +24,16 @@ export default async function Page() {
 
   const dashboardSection = (
     <div className="space-y-4">
+      {/* info user */}
+      <div className="text-sm text-gray-600">
+        <p>
+          <span className="font-bold">Nama:</span> {user?.name}
+        </p>
+        <p>
+          <span className="font-bold">Email:</span> {user?.email}
+        </p>
+      </div>
+
       <Link
         href="/dashboard"
         className="w-full inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
@@ -57,7 +62,7 @@ export default async function Page() {
           </p>
         </div>
 
-        <div>{sudahLogin ? dashboardSection : loginSection}</div>
+        <div>{user ? dashboardSection : loginSection}</div>
 
         <div className="mt-6 text-gray-600">
           <p>Fitur Utama:</p>

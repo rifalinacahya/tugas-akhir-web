@@ -1,5 +1,4 @@
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { getUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -8,11 +7,9 @@ type LayoutProps = {
 };
 
 export default async function Layout({ children }: LayoutProps) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const user = await getUser();
 
-  if (!session) {
+  if (!user) {
     redirect("/auth/login");
   }
 

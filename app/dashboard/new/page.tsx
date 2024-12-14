@@ -17,8 +17,8 @@ export default function Page() {
       },
     });
 
-    revalidatePath("/");
-    redirect("/");
+    revalidatePath("/dashboard");
+    redirect("/dashboard");
   }
 
   return (
