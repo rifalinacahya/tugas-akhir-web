@@ -1,55 +1,44 @@
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
 
 export default async function Page() {
-  const daftarPasien = await prisma.pasien.findMany();
-
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-semibold text-center mb-6">Daftar Pasien</h1>
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
+      <div className="max-w-md w-full space-y-8 text-center">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            Selamat Datang di KlinikQueue
+          </h1>
+          <p className="text-gray-600 mb-8">
+            Sistem Manajemen Antrian Pasien yang Mudah dan Efisien
+          </p>
+        </div>
 
-      <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
-        <table className="min-w-full table-auto text-left">
-          <thead className="bg-indigo-600 text-white">
-            <tr>
-              <th className="px-4 py-2">ID</th>
-              <th className="px-4 py-2">Nama</th>
-              <th className="px-4 py-2">Usia</th>
-              <th className="px-4 py-2">Keluhan</th>
-              <th className="px-4 py-2">Nomor Antrian</th>
-              <th className="px-4 py-2">Status</th>
-              <th className="px-4 py-2">Waktu Dibuat</th>
-              <th className="px-4 py-2">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            {daftarPasien.map((pasien) => (
-              <tr key={pasien.id} className="border-b hover:bg-gray-100">
-                <td className="px-4 py-2">{pasien.id}</td>
-                <td className="px-4 py-2">{pasien.nama}</td>
-                <td className="px-4 py-2">{pasien.umur}</td>
-                <td className="px-4 py-2">{pasien.keluhan}</td>
-                <td className="px-4 py-2">{pasien.nomorAntrian}</td>
-                <td className="px-4 py-2">{pasien.status}</td>
-                <td className="px-4 py-2">
-                  {pasien.tanggalDibuat.toLocaleString()}
-                </td>
-                <td>
-                  <Link href={"/edit/" + pasien.id}>
-                    <button>edit</button>
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="space-y-4">
+          <Link
+            href="/auth/login"
+            className="w-full inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          >
+            Login Staff
+          </Link>
+
+          <Link
+            href="/auth/register"
+            className="w-full inline-block bg-white text-blue-600 border border-blue-600 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+          >
+            Daftar Akun Baru
+          </Link>
+        </div>
+
+        <div className="mt-6 text-gray-600">
+          <p>Fitur Utama:</p>
+          <ul className="mt-2 space-y-2">
+            <li>✓ Manajemen antrian real-time</li>
+            <li>✓ Pendaftaran pasien online</li>
+            <li>✓ Notifikasi status antrian</li>
+            <li>✓ Laporan dan statistik kunjungan</li>
+          </ul>
+        </div>
       </div>
-
-      <Link href="/new">
-        <button className="mt-5 py-2 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-          Tambah Pasien
-        </button>
-      </Link>
     </div>
   );
 }
