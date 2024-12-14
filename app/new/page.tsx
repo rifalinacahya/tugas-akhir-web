@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default function Page() {
   async function tambahPasien(formData: FormData) {
@@ -17,6 +18,7 @@ export default function Page() {
     });
 
     revalidatePath("/");
+    redirect("/");
   }
 
   return (
