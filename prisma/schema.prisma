@@ -8,14 +8,14 @@ datasource db {
 }
 
 model Pasien {
-  id            Int      @id @default(autoincrement())
+  id            Int      @id @default(autoincrement()) // id adalah primary key
   nama          String
   umur          Int
   keluhan       String?
   nomorAntrian  Int
   status        String
   tanggalDibuat DateTime @default(now())
-  userId        String
+  userId        String // adalah foreign key yg mengarah ke tabel user
 
   // user yang menambahkan data pasien
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

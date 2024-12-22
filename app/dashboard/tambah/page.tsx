@@ -1,3 +1,4 @@
+import { getUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
@@ -15,6 +16,10 @@ export default async function Page() {
 
   async function tambahPasien(formData: FormData) {
     "use server";
+    const user = await getUser();
+    if (!user) {
+      return;
+    }
 
     await prisma.pasien.create({
       data: {
@@ -23,6 +28,7 @@ export default async function Page() {
         keluhan: formData.get("keluhan") as string,
         nomorAntrian: nextQueueNumber,
         status: "menunggu",
+        userId: user.id,
       },
     });
 
