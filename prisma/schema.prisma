@@ -15,11 +15,11 @@ model Pasien {
   nomorAntrian  Int
   status        String
   tanggalDibuat DateTime @default(now())
-}
+  userId        String
 
-// ------------------------------------------------------------------------------------------------
-// Table dibawah digunakan untuk autentikasi / login
-// ------------------------------------------------------------------------------------------------
+  // user yang menambahkan data pasien
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
 
 model User {
   id            String    @id
@@ -31,10 +31,15 @@ model User {
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
+  pasien        Pasien[]
 
   @@unique([email])
   @@map("user")
 }
+
+// ------------------------------------------------------------------------------------------------
+// Table dibawah digunakan untuk autentikasi / login
+// ------------------------------------------------------------------------------------------------
 
 model Session {
   id        String   @id
